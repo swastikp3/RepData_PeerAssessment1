@@ -1,12 +1,14 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
+title: "Reproducible Research: Peer-graded Assignment: Course Project 1 : Swastik Patel"
 output: 
   html_document:
     keep_md: true
 ---
 
 
-## Code for reading in the dataset and/or processing the data
+## 1. Code for reading in the dataset and/or processing the data
+
+Downloading the data
 
 ```r
 download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",destfile = "activity1.zip")
@@ -25,7 +27,7 @@ nrow(totalSteps)
 ## [1] 53
 ```
 
-## Histogram of the total number of steps taken each day
+## 2. Histogram of the total number of steps taken each day
 
 ```r
 hist(totalSteps$steps,col="red",main="Histogram of Total Steps taken per day",xlab="Total Steps taken per day",cex.axis=1,cex.lab = 1)
@@ -33,7 +35,7 @@ hist(totalSteps$steps,col="red",main="Histogram of Total Steps taken per day",xl
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-## Mean and median number of steps taken each day
+## 3. Mean and median number of steps taken each day
 
 ```r
 mean_steps <- mean(totalSteps$steps)
@@ -54,7 +56,7 @@ print(paste("Median number of steps taken each day ", median_steps , sep = "="))
 ```
 
 
-## Time series plot of the average number of steps taken
+## 4. Time series plot of the average number of steps taken
 
 ```r
 steps_interval <- aggregate(steps ~ interval, data = activity, mean, na.rm = TRUE)
@@ -63,7 +65,7 @@ plot(steps ~ interval, data = steps_interval, type = "l", xlab = "Time Intervals
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
-## The 5-minute interval that, on average, contains the maximum number of steps
+## 5. The 5-minute interval that, on average, contains the maximum number of steps
 
 ```r
 maxStepInterval <- steps_interval[which.max(steps_interval$steps),"interval"]
@@ -74,7 +76,7 @@ print(paste("Maximum number of steps in the 5 min interval ", maxStepInterval , 
 ## [1] "Maximum number of steps in the 5 min interval =835"
 ```
 
-## Code to describe and show a strategy for imputing missing data
+## 6. Code to describe and show a strategy for imputing missing data
 
 ```r
 missing_rows <- sum(!complete.cases(activity))
@@ -108,7 +110,7 @@ print(paste("Total number of missing values filled  ", flag , sep = "="))
 ## [1] "Total number of missing values filled  =2304"
 ```
 
-## Histogram of the total number of steps taken each day after missing values are imputed
+## 7. Histogram of the total number of steps taken each day after missing values are imputed
 
 ```r
 total.steps.per.days <- aggregate(steps ~ date, data = complete.activity, sum)
@@ -118,7 +120,7 @@ hist(total.steps.per.days$steps, col = "green", xlab = "Total Number of Steps",
 
 ![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
-## Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
+## 8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 
 ```r
 complete.activity$day <- ifelse(as.POSIXlt(as.Date(complete.activity$date))$wday%%6 == 
@@ -133,3 +135,14 @@ xyplot(steps ~ interval | factor(day), data = steps.interval, aspect = 1/2,
 
 ![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
+## 9. All of the R code needed to reproduce the results (numbers, plots, etc.) in the report
+
+```r
+## The entire R code for various sections are shown above
+
+print("Reproducible Research is amazing !!!")
+```
+
+```
+## [1] "Reproducible Research is amazing !!!"
+```

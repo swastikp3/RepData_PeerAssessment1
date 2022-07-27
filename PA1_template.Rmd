@@ -1,13 +1,15 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
+title: "Reproducible Research: Peer-graded Assignment: Course Project 1 : Swastik Patel"
 output: 
   html_document:
     keep_md: true
 ---
 
 
-## Code for reading in the dataset and/or processing the data
-```{R}
+## 1. Code for reading in the dataset and/or processing the data
+
+Downloading the data
+```{R echo=TRUE}
 download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",destfile = "activity1.zip")
 unzip("activity1.zip")
 activity <- read.table("activity.csv",sep = "," , header = TRUE)
@@ -15,18 +17,18 @@ activity <- read.table("activity.csv",sep = "," , header = TRUE)
 ```
 
 Preprocessing the data : Calculating the totalSteps data frame with steps & date
-```{R}
+```{R echo=TRUE}
 totalSteps <- aggregate(steps ~ date, data = activity, sum, na.rm = TRUE)
 nrow(totalSteps)
 ```
 
-## Histogram of the total number of steps taken each day
-```{R}
+## 2. Histogram of the total number of steps taken each day
+```{R echo=TRUE}
 hist(totalSteps$steps,col="red",main="Histogram of Total Steps taken per day",xlab="Total Steps taken per day",cex.axis=1,cex.lab = 1)
 ```
 
-## Mean and median number of steps taken each day
-```{R}
+## 3. Mean and median number of steps taken each day
+```{R echo=TRUE}
 mean_steps <- mean(totalSteps$steps)
 print(paste("Mean number of steps taken each day ", mean_steps , sep = "="))
 median_steps <- median(totalSteps$steps)
@@ -34,20 +36,20 @@ print(paste("Median number of steps taken each day ", median_steps , sep = "="))
 ```
 
 
-## Time series plot of the average number of steps taken
-```{R}
+## 4. Time series plot of the average number of steps taken
+```{R echo=TRUE}
 steps_interval <- aggregate(steps ~ interval, data = activity, mean, na.rm = TRUE)
 plot(steps ~ interval, data = steps_interval, type = "l", xlab = "Time Intervals (5-minute)", ylab = "Mean number of steps taken (all Days)", main = "Average number of steps Taken at 5 minute Intervals",  col = "blue")
 ```
 
-## The 5-minute interval that, on average, contains the maximum number of steps
-```{R}
+## 5. The 5-minute interval that, on average, contains the maximum number of steps
+```{R echo=TRUE}
 maxStepInterval <- steps_interval[which.max(steps_interval$steps),"interval"]
 print(paste("Maximum number of steps in the 5 min interval ", maxStepInterval , sep = "="))
 ```
 
-## Code to describe and show a strategy for imputing missing data
-```{R}
+## 6. Code to describe and show a strategy for imputing missing data
+```{R echo=TRUE}
 missing_rows <- sum(!complete.cases(activity))
 print(paste("Total number of missing rows ", missing_rows , sep = "="))
 
@@ -69,15 +71,15 @@ for (i in 1:nrow(complete.activity)) {
 print(paste("Total number of missing values filled  ", flag , sep = "="))
 ```
 
-## Histogram of the total number of steps taken each day after missing values are imputed
-```{R}
+## 7. Histogram of the total number of steps taken each day after missing values are imputed
+```{R echo=TRUE}
 total.steps.per.days <- aggregate(steps ~ date, data = complete.activity, sum)
 hist(total.steps.per.days$steps, col = "green", xlab = "Total Number of Steps", 
      ylab = "Frequency", main = "Histogram of Total Number of Steps taken each Day")
 ```
 
-## Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
-```{R}
+## 8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
+```{R echo=TRUE}
 complete.activity$day <- ifelse(as.POSIXlt(as.Date(complete.activity$date))$wday%%6 == 
                                     0, "weekend", "weekday")
 complete.activity$day <- factor(complete.activity$day, levels = c("weekday", "weekend"))
@@ -88,3 +90,10 @@ xyplot(steps ~ interval | factor(day), data = steps.interval, aspect = 1/2,
        type = "l")
 ```
 
+## 9. All of the R code needed to reproduce the results (numbers, plots, etc.) in the report
+```{R echo=TRUE}
+## The entire R code for various sections are shown above
+
+print("Reproducible Research is amazing !!!")
+
+```
